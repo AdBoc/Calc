@@ -1,73 +1,27 @@
+//zachowania kalkulatorowe, ograniczenie ilosci znakow wpisaywanych //history
+//cofanie backspacem wpisanej liczby
 import React, { useState } from 'react';
+import { useCalculator } from './useCalculator';
 import './Calculator.scss';
 
-const operators = ['+', '-', '*', '/'];
-const isOperator = (operator: any): boolean => { return operators.includes(operator) };
-const hasDot = (argument: any): boolean => { return /\./.test(argument) };
-
 const Calcualtor = (): JSX.Element => {
-  const [arg1, setArg1] = useState('');
-  const [arg2, setArg2] = useState<any>('');
-  const [operator, setOperator] = useState<any>('');
+  const { calcData, checkData } = useCalculator();
 
   const handleClick = (e: any) => {
     const { value } = e.target;
-    if (isOperator(value)) {
-      if (arg1 !== '') {
-        setOperator(value)
-      }
-      if (arg1 !== '' && arg2 !== '') {
-        calculate();
-        setOperator(value);
-      }
-    } else {
-      if (operator === '') {
-        if (value === '.' && hasDot(arg1)) {
-          return
-        } else {
-          setArg1((prev: any) => prev + value);
-        }
-      } else {
-        if (value === '.' && hasDot(arg2)) {
-          return
-        } else {
-          setArg2((prev: any) => prev + value);
-        }
-      }
-    }
+    checkData(value);
   }
 
-  const clear = () => { //operator robi sie pusty
-    setArg1('');
-    setArg2('');
-    setOperator('');
+  const calculate = () => {
   }
 
-  const calculate = () => { //opertator robi sie pusty
-    let response = 0;
-    switch (operator) {
-      case '+':
-        response = +(arg1) + +(arg2);
-        break;
-      case '-':
-        response = +(arg1) - +(arg2);
-        break;
-      case '*':
-        response = +(arg1) * +(arg2);
-        break;
-      case '/':
-        response = +(arg1) / +(arg2);
-        break;
-    }
-    clear();
-    console.log(response);
-    setArg1(response.toString());
+  const clear = () => {
   }
 
   return (
     <>
       <div className="flex">Calculator
-        <div>Input: {`${arg1} ${operator} ${arg2}`}</div>
+        <div>Input:</div>
         <div>
           <button className="button" value="1" onClick={handleClick}>1</button>
           <button className="button" value="2" onClick={handleClick}>2</button>
@@ -99,11 +53,3 @@ const Calcualtor = (): JSX.Element => {
 }
 
 export default Calcualtor;
-
-//jesli qrgument 2 w expression nie jest puste a ktos wcisa nasteny przycisk to jest to roznowazne z = 
-
-//zachowania kalkulatorowe, ograniczenie ilosci znakow wpisaywanych, 
-//nie mozna posawic dwoch kropek i znakow, cofanie backspacem wpisanej liczby
-// const [history, setHistory] = useState('');
-// const [result, setResult] = useState<any>('');
-// const [calculatorInputData, setCalculatorInputData] = useState<any>({arg1: '', arg2: '', opertator: ''})
