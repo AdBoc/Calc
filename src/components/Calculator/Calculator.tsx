@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import './Calculator.scss';
 
+const operators = ['+', '-', '*', '/'];
+const isOperator = (operator: any): boolean => { return operators.includes(operator) };
+const hasDot = (argument: any): boolean => { return /\./.test(argument) };
+
 const Calcualtor = (): JSX.Element => {
   const [arg1, setArg1] = useState('');
   const [arg2, setArg2] = useState<any>('');
@@ -8,7 +12,7 @@ const Calcualtor = (): JSX.Element => {
 
   const handleClick = (e: any) => {
     const { value } = e.target;
-    if (value === "+" || value === '-' || value === '*' || value === '/') {
+    if (isOperator(value)) {
       if (arg1 !== '') {
         setOperator(value)
       }
@@ -18,9 +22,17 @@ const Calcualtor = (): JSX.Element => {
       }
     } else {
       if (operator === '') {
-        setArg1((prev: any) => prev + value);
+        if (value === '.' && hasDot(arg1)) {
+          return
+        } else {
+          setArg1((prev: any) => prev + value);
+        }
       } else {
-        setArg2((prev: any) => prev + value);
+        if (value === '.' && hasDot(arg2)) {
+          return
+        } else {
+          setArg2((prev: any) => prev + value);
+        }
       }
     }
   }
@@ -33,14 +45,20 @@ const Calcualtor = (): JSX.Element => {
 
   const calculate = () => { //opertator robi sie pusty
     let response = 0;
-    if (operator === '+')
-      response = +(arg1) + +(arg2);
-    else if (operator === '-')
-      response = +(arg1) - +(arg2);
-    else if (operator === '*')
-      response = +(arg1) * +(arg2);
-    else if (operator === '/')
-      response = +(arg1) / +(arg2);
+    switch (operator) {
+      case '+':
+        response = +(arg1) + +(arg2);
+        break;
+      case '-':
+        response = +(arg1) - +(arg2);
+        break;
+      case '*':
+        response = +(arg1) * +(arg2);
+        break;
+      case '/':
+        response = +(arg1) / +(arg2);
+        break;
+    }
     clear();
     console.log(response);
     setArg1(response.toString());
