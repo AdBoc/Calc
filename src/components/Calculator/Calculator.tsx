@@ -1,27 +1,26 @@
 //zachowania kalkulatorowe, ograniczenie ilosci znakow wpisaywanych //history
 //cofanie backspacem wpisanej liczby
-import React, { useState } from 'react';
+import React from 'react';
 import { useCalculator } from './useCalculator';
 import './Calculator.scss';
 
 const Calcualtor = (): JSX.Element => {
-  const { calcData, checkData } = useCalculator();
+  const { calcData, checkData, calculate, clear } = useCalculator();
 
   const handleClick = (e: any) => {
     const { value } = e.target;
     checkData(value);
   }
 
-  const calculate = () => {
-  }
-
-  const clear = () => {
+  const showData = () => {
+    let result = Object.keys(calcData).map(item => (calcData as any)[item] ? (calcData as any)[item] : '')
+    return result;
   }
 
   return (
     <>
       <div className="flex">Calculator
-        <div>Input:</div>
+  <div>Input: {showData()}</div>
         <div>
           <button className="button" value="1" onClick={handleClick}>1</button>
           <button className="button" value="2" onClick={handleClick}>2</button>

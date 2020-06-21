@@ -1,5 +1,5 @@
 export interface CalcData {
-  arg1: number | null;
-  arg2: number | null;
+  arg1: string | null;
+  arg2: string | null;
   operator: string | null;
 }
