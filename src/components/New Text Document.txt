@@ -1,0 +1,133 @@
+//zachowania kalkulatorowe, ograniczenie ilosci znakow wpisaywanych //history
+// //cofanie backspacem wpisanej liczby
+// import React from 'react';
+// import { useCalculator } from './useCalculator';
+// import './Calculator.scss';
+
+// const Calcualtor = (): JSX.Element => {
+//   const { calcData, checkData, calculate, clear } = useCalculator();
+
+//   const handleClick = (e: any) => {
+//     const { value } = e.target;
+//     checkData(value);
+//   }
+
+//   const showData = () => {
+
+//     let result = Object.keys(calcData).map(item => (calcData as any)[item] ? (calcData as any)[item] : '')
+//     return result;
+//   }
+
+//   return (
+//     <div className="flex">
+//       <div>Input: {showData()}</div>
+//       <div>
+//         <button className="button" value="1" onClick={handleClick}>1</button>
+//         <button className="button" value="2" onClick={handleClick}>2</button>
+//         <button className="button" value="3" onClick={handleClick}>3</button>
+//       </div>
+//       <div>
+//         <button className="button" value="4" onClick={handleClick}>4</button>
+//         <button className="button" value="5" onClick={handleClick}>5</button>
+//         <button className="button" value="6" onClick={handleClick}>6</button>
+//       </div>
+//       <div>
+//         <button className="button" value="7" onClick={handleClick}>7</button>
+//         <button className="button" value="8" onClick={handleClick}>8</button>
+//         <button className="button" value="9" onClick={handleClick}>9</button>
+//       </div>
+//       <div>
+//         <button className="button" value="0" onClick={handleClick}>0</button>
+//         <button className="button" value="+" onClick={handleClick}>+</button>
+//         <button className="button" value="-" onClick={handleClick}>-</button>
+//         <button className="button" value="*" onClick={handleClick}>*</button>
+//         <button className="button" value="/" onClick={handleClick}>/</button>
+//         <button className="button" value="." onClick={handleClick}>.</button>
+//         <button className="button" value="=" onClick={calculate}>=</button>
+//         <button className="button" value="clear" onClick={clear}>clear</button>
+//       </div>
+//     </div>
+//   )
+// }
+
+// export default Calcualtor;
+
+// const initialCalcData = {
+//   arg1: null,
+//   operator: null,
+//   arg2: null,
+// }
+// const operators = ['+', '-', '*', '/'];
+// const isOperator = (operator: string): boolean => { return operators.includes(operator) };
+// const hasDot = (argument: string | null): boolean => { return /\./.test(argument!) };
+
+// interface CalcData {
+//   arg1: string | null;
+//   arg2: string | null;
+//   operator: string | null;
+// }
+
+// export const useCalculator = () => {
+//   const [calcData, setCalcData] = useState<CalcData>(initialCalcData);
+
+//   const checkData = (value: string) => {
+//     if (!isOperator(value)) {
+//       if (calcData.operator) {
+//         if (value === '.' && hasDot(calcData.arg2)) {
+//           return;
+//         } else {
+//           if (calcData.arg2)
+//             value = calcData.arg2 + value;
+//           setCalcData((prev) => { return { ...prev, arg2: value } })
+//         }
+//       } else {
+//         if (value === '.' && hasDot(calcData.arg1)) {
+//           return;
+//         } else {
+//           if (calcData.arg1)
+//             value = calcData.arg1 + value;
+//           setCalcData((prev) => { return { ...prev, arg1: value } })
+//         }
+//       }
+//     } else {
+//       if (calcData.arg1) {
+//         setCalcData({ ...calcData, operator: value });
+//         if (calcData.arg2) {
+//           calculate();
+//           setCalcData(prev => { return { ...prev, operator: value } });
+//         }
+//       }
+//     }
+//   }
+
+//   const calculate = () => {
+//     let response = 0;
+//     const { operator, arg1, arg2 } = calcData;
+//     switch (operator) {
+//       case '+':
+//         response = +(arg1!) + +(arg2!);
+//         break;
+//       case '-':
+//         response = +(arg1!) - +(arg2!);
+//         break;
+//       case '*':
+//         response = +(arg1!) * +(arg2!);
+//         break;
+//       case '/':
+//         response = +(arg1!) / +(arg2!);
+//         break;
+//     }
+//     setCalcData({ arg1: response.toString(), operator: null, arg2: null });
+//   }
+
+//   const clear = () => {
+//     setCalcData(initialCalcData);
+//   }
+
+//   return {
+//     calcData,
+//     checkData,
+//     calculate,
+//     clear
+//   }
+// }
