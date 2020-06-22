@@ -1,49 +1,35 @@
+import { displayObject } from "./interfaces";
+
 class Calculator2 {
-  private _arg1: number = 0;
-  private _arg2: number = 0;
-  private _result: number = 0;
-  private opertator: string = "+";
-  private history: string = "";
-  private expression: string = "";
+  private _currentArg: string = "";
+  private _prevArg: string = "";
+  private _operator: string = "";
 
-  public sum() {
-    this.result = this.arg1 + this.arg2;
+  public clear() {
+    this._currentArg = "";
+    this._prevArg = "";
   }
 
-  public subtract() {
-    this.result = this.arg1 - this.arg2;
+  public appendToArgument(value: string) {
+    if (value === "." && this._currentArg.includes(".")) return;
+    this._currentArg += value;
   }
 
-  public multiplication() {
-    this.result = this.arg1 * this.arg2;
+  public chooseOperator(value: string) {
+    this._operator = value;
+    this._prevArg = this._currentArg;
+    this._currentArg = "";
   }
 
-  public division() {
-    this.result = this.arg1 / this.arg2;
+  public computee() {}
+
+  public deleteChar(): void {
+    this._currentArg = this._currentArg.slice(0, -1);
   }
 
-  public get arg1(): number {
-    return this._arg1;
-  }
-
-  public set arg1(value: number) {
-    this._arg1 = value;
-  }
-
-  public get arg2(): number {
-    return this._arg2;
-  }
-
-  public set arg2(value: number) {
-    this._arg2 = value;
-  }
-
-  public get result(): number {
-    return this._result;
-  }
-
-  public set result(value: number) {
-    this._result = value;
+  public updateDisplay(): displayObject {
+    let prevArg = this._prevArg + this._operator;
+    return { currentArg: this._currentArg, prevArg: prevArg };
   }
 }
 
